@@ -23,8 +23,21 @@ const BoardCreateComp = () => {
         navigate(-1);
     };
 
+    const isValidForm = (data: BoardCreateInfo) => {
+        return (
+            data.boardTitle.trim() !== '' &&
+            data.boardDivCd.trim() !== '' &&
+            data.boardText.trim() !== ''
+        );
+    };
+
     const onsubmit = (formData: BoardCreateInfo) => {
         console.log('formData >>> ', formData);
+
+        if (!isValidForm(formData)) {
+            alert('모든 입력 항목을 채워주세요.');
+            return;
+        }
         useApi.post('/createBoard', formData)
         .then(res => {
             console.log('등록 성공');
