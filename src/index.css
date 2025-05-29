@@ -1,0 +1,32 @@
+.title {
+  margin-left: 100px;
+}
+
+.list {
+  margin-left: 100px;
+  margin-top: 20px;
+  margin-right: 100px;
+}
+
+.form_btn_group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px; /* 버튼 사이 간격 */
+  margin-top: 16px; /* 필요시 위 여백 */
+}
+
+.detail {
+  margin-top: 50px;
+  margin-left: 120px;
+  margin-right: 400px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.detailTitle {
+  height: 30px;
+}
+
+.detailText {
+  height: 500px;
+}
