@@ -31,7 +31,7 @@ const BoardDetailPage = () => {
     };
 
     useEffect(() => {
-        useApi.get(`/getBoardDetail?boardId=${boardIdNumber}`)
+        useApi.get<Board>(`/getBoardDetail?boardId=${boardIdNumber}`)
         .then(res => {
             setBoard(res.data);
             console.log('조회 성공');
