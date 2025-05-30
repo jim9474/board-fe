@@ -30,3 +30,8 @@
 .detailText {
   height: 500px;
 }
+
+.main {
+  display: flex;
+  justify-content: space-between;
+}
