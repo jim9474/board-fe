@@ -13,7 +13,7 @@ const HomePage = () => {
     };
     
     useEffect(() => {
-        useApi.get<Board[]>("/getBoardList")
+        useApi.get<Board[]>("/getAllBoardList")
         .then(res => setBoards(res.data));
     }, []);    
 
