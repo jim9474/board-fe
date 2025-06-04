@@ -32,6 +32,18 @@
 }
 
 .main {
+  position: relative;
+}
+
+.main div {
+  position: absolute;
   display: flex;
-  justify-content: space-between;
+  bottom: 0;
+  right: 0;
+  gap: 10px;
+}
+
+.signup {
+  text-align: center;
+  align-items: center;
 }
