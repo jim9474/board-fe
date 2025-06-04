@@ -8,6 +8,7 @@ import SportsBoardListPage from './pages/SportsBoardListPage'
 import StreamingBoardListPage from './pages/StreamingBoardListPage'
 import BoardCreateComp from './components/BoardCreateComp'
 import BoardDetailPage from './pages/BoardDetailPage'
+import CreateUserPage from './pages/CreateUserPage'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/sports' element={<SportsBoardListPage />} />
           <Route path='/create' element={<BoardCreateComp />} />
           <Route path='/detail/:board_id' element={<BoardDetailPage />} />
+          <Route path='/createUser' element={<CreateUserPage />} />
         </Routes>
       </div>
     </BrowserRouter>
