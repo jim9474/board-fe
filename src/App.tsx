@@ -9,6 +9,7 @@ import StreamingBoardListPage from './pages/StreamingBoardListPage'
 import BoardCreateComp from './components/BoardCreateComp'
 import BoardDetailPage from './pages/BoardDetailPage'
 import CreateUserPage from './pages/CreateUserPage'
+import LoginPage from './pages/LoginPage'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<HomePage />} />
+          <Route path='/login' element={<LoginPage />} />
           <Route path='/game' element={<GameBoardListPage />} />
           <Route path='/politics' element={<PoliticsBoardListPage />} />
           <Route path='/streaming' element={<StreamingBoardListPage />} />
