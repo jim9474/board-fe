@@ -6,12 +6,12 @@ import { Col } from 'react-bootstrap';
 import useApi from '../apis/Api';
 import { useNavigate } from 'react-router-dom';
 
-interface UserCreateInfo {
+export interface UserCreateInfo {
     userId: string;
     userPw: string;
-    userEmail: string;
-    userNn: string;
-    confirmPw: string;
+    userEmail?: string;
+    userNn?: string;
+    confirmPw?: string;
 }
 
 const SignUpFormComp = () => {
@@ -46,8 +46,8 @@ const SignUpFormComp = () => {
         return (
             idStatus === 'valid' &&
             data.userPw.trim() !== '' &&
-            data.userEmail.trim() !== '' &&
-            data.userNn.trim() !== '' &&
+            data.userEmail?.trim() !== '' &&
+            data.userNn?.trim() !== '' &&
             isMatch
         );
     };
