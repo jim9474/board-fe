@@ -1,3 +1,8 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
 .title {
   margin-left: 100px;
 }
@@ -16,11 +21,11 @@
 }
 
 .detail {
+  min-height: 100vh; /* 화면 높이만큼 최소 확보 */
+  padding-bottom: 100px; /* 하단 여백 */
   margin-top: 50px;
   margin-left: 120px;
   margin-right: 400px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
 }
 
 .detailTitle {
@@ -29,6 +34,7 @@
 
 .detailText {
   height: 500px;
+  border: 1px solid #ccc;
 }
 
 .main {
@@ -46,4 +52,8 @@
 .signup {
   text-align: center;
   align-items: center;
+}
+
+.comment {
+  margin-top: 50px;
 }

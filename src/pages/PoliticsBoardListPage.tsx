@@ -7,9 +7,14 @@ import BoardListComp from '../components/BoardListComp';
 const PoliticsBoardListPage = () => {
     const navigate = useNavigate();
     const [boards, setBoards] = useState<Board[]>([]);
+    const getToken = localStorage.getItem('token');
 
     const boardCreate = () => {
-        navigate('/create');
+        if (getToken) {
+            navigate('/create');
+        } else {
+            navigate('/login')
+        }
     };
     
     useEffect(() => {

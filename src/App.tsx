@@ -10,9 +10,10 @@ import BoardCreateComp from './components/BoardCreateComp'
 import BoardDetailPage from './pages/BoardDetailPage'
 import CreateUserPage from './pages/CreateUserPage'
 import LoginPage from './pages/LoginPage'
+import { useEffect, useState } from 'react'
+import useApi from './apis/Api'
 
 function App() {
-
   return (
     <BrowserRouter>
       <div>      
