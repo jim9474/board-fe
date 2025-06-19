@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import type { Board } from '../components/BoardListComp'
 import { useParams } from 'react-router-dom'
 import useApi from '../apis/Api'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../auth/AuthContext'
+import BoardCommentComp from '../components/BoardCommentComp'
 
 const BoardDetailPage = () => {
     const { board_id } = useParams<{ board_id: string }>();
     const boardIdNumber = board_id ? Number(board_id) : null;
+    const { user } = useContext(AuthContext);
 
     const [board, setBoard] = useState<Board | null>(null);
     const navigate = useNavigate();
@@ -53,8 +56,13 @@ const BoardDetailPage = () => {
             </div>
             <div className='form_btn_group'>
                 <button onClick={onCancel}>목록</button>
-                <button onClick={() => onDel(boardIdNumber)}>삭제</button>
+                {user?.userId === board?.crte_user && 
+                    <button onClick={() => onDel(boardIdNumber)}>삭제</button>
+                }
             </div>
+            {board?.board_id !== undefined && (
+                <BoardCommentComp boardId={board.board_id} />
+            )}
         </div>
     )
 }

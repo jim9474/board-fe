@@ -12,6 +12,7 @@ export interface Board {
   board_text: string;
   board_read_cnt: number;
   board_div_cd: string;
+  crte_user: string;
 }
 
 const BoardListComp = ({board: b}:BoardProps) => {
