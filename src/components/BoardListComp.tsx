@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import useApi from '../apis/Api'
+import React, { useState } from 'react';
+import useApi from '../apis/Api';
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 interface BoardProps {
   board: Board;
@@ -15,26 +19,45 @@ export interface Board {
   crte_user: string;
 }
 
-const BoardListComp = ({board: b}:BoardProps) => {
-    const [board, setBoard] = useState(b);
-    const [boardReadCnt, setBoardReadCnt] = useState(b.board_read_cnt);
-    
-    const addCnt = (boardId: number) => {
-        useApi.post("/addReadCnt", {boardId})
-        .then(res => {
-            console.log("조회수 증가 성공");
-            setBoardReadCnt(prev => prev + 1);
-        })
-        .catch(err => {
-            console.log("조회수 증가 실패", err);
-        });
-    }
+const BoardListComp = ({ board: b }: BoardProps) => {
+  const [boardReadCnt, setBoardReadCnt] = useState(b.board_read_cnt);
 
-    return (
-        <li key={board.board_id}>
-            <Link to={`/detail/${board.board_id}`} onClick={() => addCnt(board.board_id)}>{board.board_title} [{boardReadCnt}]</Link>
-        </li>
-    )
-}
+  const addCnt = (boardId: number) => {
+    useApi.post("/addReadCnt", { boardId })
+      .then(() => {
+        console.log("조회수 증가 성공");
+        setBoardReadCnt(prev => prev + 1);
+      })
+      .catch(err => {
+        console.log("조회수 증가 실패", err);
+      });
+  };
 
-export default BoardListComp
+  return (
+    <Card className="mb-3 shadow-sm">
+      <Card.Body>
+        <Row>
+          <Col>
+            <Card.Title className="h6 mb-0">
+              <Link
+                to={`/detail/${b.board_id}`}
+                className="text-decoration-none text-dark"
+                onClick={() => addCnt(b.board_id)}
+              >
+                {b.board_title}
+              </Link>
+            </Card.Title>
+          </Col>
+          <Col xs="auto">
+            <Badge bg="secondary">조회수 {boardReadCnt}</Badge>
+          </Col>
+        </Row>
+        <Card.Text className="mt-2 text-muted">
+          작성자: {b.crte_user} | 분류: {b.board_div_cd}
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  );
+};
+
+export default BoardListComp;
