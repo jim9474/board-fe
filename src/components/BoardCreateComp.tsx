@@ -1,9 +1,10 @@
-import React from 'react'
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useApi from '../apis/Api';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 interface BoardCreateInfo {
     boardTitle: string;
@@ -19,9 +20,7 @@ const BoardCreateComp = () => {
         boardText: '',
     });
 
-    const onCancel = () => {
-        navigate(-1);
-    };
+    const onCancel = () => navigate(-1);
 
     const isValidForm = (data: BoardCreateInfo) => {
         return (
@@ -32,75 +31,76 @@ const BoardCreateComp = () => {
     };
 
     const onsubmit = (formData: BoardCreateInfo) => {
-        console.log('formData >>> ', formData);
-
         if (!isValidForm(formData)) {
             alert('모든 입력 항목을 채워주세요.');
             return;
         }
         useApi.post('/createBoard', formData)
-        .then(res => {
-            console.log('등록 성공');
-            navigate("/");
-        })
-        .catch(err => {
-            console.log('등록 실패', err);
-        });
+            .then(() => {
+                console.log('등록 성공');
+                navigate("/");
+            })
+            .catch(err => {
+                console.log('등록 실패', err);
+            });
     };
 
     return (
-        <div className='list'>
-        <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">제목</InputGroup.Text>
-            <Form.Control
-                placeholder="제목을 입력하세요."
-                aria-label="제목을 입력하세요."
-                aria-describedby="basic-addon1"
-                value={formData.boardTitle}
-                onChange={(e) =>
-                    setFormData({...formData, boardTitle: e.target.value})
-                }
-            />
-        </InputGroup>
+        <Container className="mt-5">
+            <div className="border rounded shadow-sm p-4">
+                <h4 className="mb-4 fw-bold">게시글 등록</h4>
 
-        <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">카테고리</InputGroup.Text>
-            <Form.Control
-                as="select"
-                aria-label="카테고리 선택"
-                aria-describedby="basic-addon1"
-                value={formData.boardDivCd}
-                onChange={(e) =>
-                    setFormData({...formData, boardDivCd: e.target.value})
-                }
-            >
-                <option value="">선택하세요.</option>
-                <option value="game">게임</option>
-                <option value="streaming">방송</option>
-                <option value="politics">정치</option>
-                <option value="sports">스포츠</option>
-            </Form.Control>
-        </InputGroup>
+                <Form.Group className="mb-3">
+                    <Form.Label>제목</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="제목을 입력하세요"
+                        value={formData.boardTitle}
+                        onChange={(e) =>
+                            setFormData({ ...formData, boardTitle: e.target.value })
+                        }
+                    />
+                </Form.Group>
 
-        <InputGroup>
-            <InputGroup.Text>내용</InputGroup.Text>
-            <Form.Control 
-                as="textarea"
-                placeholder="내용을 입력하세요." 
-                aria-label="With textarea"
-                style={{ height: '400px'}}
-                value={formData.boardText}
-                onChange={(e) =>
-                    setFormData({...formData, boardText: e.target.value})
-                } 
-            />
-        </InputGroup>
-        <div className='form_btn_group'>
-            <button onClick={onCancel}>취소</button>
-            <button onClick={() => onsubmit(formData)}>등록</button>
-        </div>
-        </div>
-    )
-}
+                <Form.Group className="mb-3">
+                    <Form.Label>카테고리</Form.Label>
+                    <Form.Select
+                        value={formData.boardDivCd}
+                        onChange={(e) =>
+                            setFormData({ ...formData, boardDivCd: e.target.value })
+                        }
+                    >
+                        <option value="">선택하세요</option>
+                        <option value="game">게임</option>
+                        <option value="streaming">방송</option>
+                        <option value="politics">정치</option>
+                        <option value="sports">스포츠</option>
+                    </Form.Select>
+                </Form.Group>
 
-export default BoardCreateComp
+                <Form.Group className="mb-4">
+                    <Form.Label>내용</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={10}
+                        placeholder="내용을 입력하세요"
+                        value={formData.boardText}
+                        onChange={(e) =>
+                            setFormData({ ...formData, boardText: e.target.value })
+                        }
+                        style={{ whiteSpace: 'pre-wrap' }}
+                    />
+                </Form.Group>
+
+                <div className="d-flex justify-content-end">
+                    <ButtonGroup>
+                        <Button variant="secondary" onClick={onCancel}>취소</Button>
+                        <Button variant="primary" onClick={() => onsubmit(formData)}>등록</Button>
+                    </ButtonGroup>
+                </div>
+            </div>
+        </Container>
+    );
+};
+
+export default BoardCreateComp;
