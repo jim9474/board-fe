@@ -29,7 +29,12 @@ useApi.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      window.location.href = "/login"; // 로그인 페이지로 강제 이동
+
+      // 로그인 페이지로 강제 이동
+      const path = window.location.pathname;
+      if (path !== '/login') {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }

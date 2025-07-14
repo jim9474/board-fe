@@ -11,6 +11,7 @@ interface Comment {
   crte_user?: string;
   comment_st_cd? : number;
   board_id?: number;
+  formatted_dtm?: string;
 }
 
 interface Props {
@@ -73,7 +74,7 @@ const CommentItem = ({ comment, onRefresh }: Props) => {
         <div className="d-flex justify-content-between">
           <div>
             <strong>{comment.user_nn}</strong>{' '}
-            <small className="text-muted">{comment.crte_dtm}</small>
+            <small className="text-muted">{comment.formatted_dtm}</small>
           </div>
           <div className="d-flex gap-2">
             {user?.userId === comment.crte_user && (

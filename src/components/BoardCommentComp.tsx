@@ -12,6 +12,7 @@ interface Comment {
   crte_dtm?: string;
   parent_id: number | null;
   comment_st_cd?: number;
+  formatted_dtm?: string;
   replies?: Comment[]; // 트리 구조를 위한 필드
 }
 

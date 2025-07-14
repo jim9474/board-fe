@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button, Col, Form, Row, Container, Card } from 'react-bootstrap';
 import useApi from '../apis/Api';
 import { AuthContext } from '../auth/AuthContext';
@@ -22,18 +22,22 @@ const LoginPage = () => {
         e.preventDefault();
         if (isValid(formData)) {
             useApi.post('/login', formData)
-                .then(res => {
-                    const { token, user } = res.data;
-                    setLoginStatus('pass');
-                    login(token, user);
-                    navigate('/');
-                })
-                .catch(err => {
-                    setLoginStatus('unpass');
-                    setMsg(err.response?.data?.message || '로그인 실패');
-                });
+            .then(res => {
+                const { token, user } = res.data;
+                setLoginStatus('pass');
+                login(token, user);
+                navigate('/');
+            })
+            .catch(err => {
+                setLoginStatus('unpass');
+                setMsg(err.response?.data?.message || '로그인 실패');
+            });
         }
     };
+
+    useEffect(() => {
+      console.log('🔁 컴포넌트 마운트됨');
+    }, []);
 
     return (
         <Container fluid className="vh-100 d-flex justify-content-center align-items-center">
