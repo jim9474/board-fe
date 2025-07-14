@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -6,14 +6,19 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
+import UserEditModal from './UserEditModal';
 
 const Header = () => {
     const { user, logout } = useContext(AuthContext);
+    const [ showEditModal, setShowEditModal ] = useState(false);
 
     const handleLogout = () => {
         logout();
         window.location.reload();
     };
+
+    const handleOpenEditModal = () => setShowEditModal(true);
+    const handleCloseEditModal = () => setShowEditModal(false);
 
     return (
         <header className="border-bottom shadow-sm mb-3">
@@ -25,7 +30,13 @@ const Header = () => {
                     <Col md={6} className="text-md-end text-center">
                         {user ? (
                             <>
-                                <span className="me-3 fw-bold">{user.userId} 님</span>
+                                <span
+                                    className="me-3 fw-bold text-primary"
+                                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                    onClick={handleOpenEditModal}
+                                >
+                                    {user.userId} 님
+                                </span>
                                 <span
                                     className="text-danger"
                                     style={{ cursor: 'pointer' }}
@@ -62,6 +73,11 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+
+            {/* 회원정보 수정 모달 */}
+            {user && (
+                <UserEditModal show={showEditModal} onHide={handleCloseEditModal} user={user} />
+            )}
         </header>
     );
 };
