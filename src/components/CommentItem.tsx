@@ -24,8 +24,6 @@ const CommentItem = ({ comment, onRefresh }: Props) => {
   const [replyContent, setReplyContent] = useState('');
   const { user } = useContext(AuthContext);
 
-  console.log('comment_st_cd:', comment?.comment_st_cd);
-
   const handleDelete = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       useApi.post('/deleteComment', { id: comment.comment_id })
