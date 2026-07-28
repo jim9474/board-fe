@@ -5,11 +5,13 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import FileUploadComp from './FileUploadComp';
 
 interface BoardCreateInfo {
-    boardTitle: string;
-    boardDivCd: string;
-    boardText: string;
+    boardTitle?: string;
+    boardDivCd?: string;
+    boardText?: string;
+    attach_file_gr_id?: string;
 }
 
 const BoardCreateComp = () => {
@@ -18,31 +20,58 @@ const BoardCreateComp = () => {
         boardTitle: '',
         boardDivCd: '',
         boardText: '',
+        attach_file_gr_id: ''
     });
+    const [files, setFiles] = useState<File[]>([]);
 
     const onCancel = () => navigate(-1);
 
     const isValidForm = (data: BoardCreateInfo) => {
         return (
-            data.boardTitle.trim() !== '' &&
-            data.boardDivCd.trim() !== '' &&
-            data.boardText.trim() !== ''
+            data.boardTitle?.trim() !== '' &&
+            data.boardDivCd?.trim() !== '' &&
+            data.boardText?.trim() !== ''
         );
     };
 
-    const onsubmit = (formData: BoardCreateInfo) => {
+    const onsubmit = async (formData: BoardCreateInfo) => {
+        let fileGrId = null;
+        if (files) {
+            const fileData = new FormData();
+            // fileData.append('file', files);
+            // for (const [key, value] of fileData.entries()) {
+            //     console.log(`${key}:`, value);
+            // }
+            files.forEach(file => {
+                fileData.append('files', file); // 서버에서 @RequestParam("files")로 받아야 함
+                for (const [key, value] of fileData.entries()) {
+                console.log(`${key}:`, value);
+            }
+            });
+            try {
+                const res = await useApi.post('/uploadFile', fileData);
+                fileGrId = res.data;
+            } catch (err) {
+                alert('업로드 실패');
+                return;
+            }
+        }
+        console.log('fileGrId >>> ', fileGrId);
         if (!isValidForm(formData)) {
             alert('모든 입력 항목을 채워주세요.');
             return;
         }
-        useApi.post('/createBoard', formData)
-            .then(() => {
-                console.log('등록 성공');
-                navigate("/");
-            })
-            .catch(err => {
-                console.log('등록 실패', err);
-            });
+        useApi.post('/createBoard', formData = ({
+            ...formData,
+            attach_file_gr_id: fileGrId,
+        }))
+        .then(() => {
+            console.log('등록 성공');
+            navigate("/");
+        })
+        .catch(err => {
+            console.log('등록 실패', err);
+        });
     };
 
     return (
@@ -76,6 +105,11 @@ const BoardCreateComp = () => {
                         <option value="politics">정치</option>
                         <option value="sports">스포츠</option>
                     </Form.Select>
+                </Form.Group>
+
+                <Form.Group className='mb-3'>
+                    <Form.Label>파일 첨부</Form.Label>
+                    <FileUploadComp onFileSelect={setFiles} />
                 </Form.Group>
 
                 <Form.Group className="mb-4">

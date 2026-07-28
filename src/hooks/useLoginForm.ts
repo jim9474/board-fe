@@ -25,7 +25,7 @@ export const useLoginForm = () => {
   };
 
   const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault(); // 🔥 꼭 필요!
+    event.preventDefault(); // 꼭 필요
     if (!isValid(formData)) return;
 
     useApi
