@@ -17,6 +17,7 @@ export interface Board {
   board_read_cnt: number;
   board_div_cd: string;
   crte_user: string;
+  attach_file_id: string;
 }
 
 const BoardListComp = ({ board: b }: BoardProps) => {

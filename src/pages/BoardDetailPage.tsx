@@ -16,6 +16,12 @@ interface VoteType {
     downCnt: number;
 }
 
+interface AttachFile {
+    attach_file_id: string;
+    attach_file_nm: string;
+    attach_file_path: string;
+}
+
 const BoardDetailPage = () => {
     const { board_id } = useParams<{ board_id: string }>();
     const boardIdNumber = board_id ? Number(board_id) : null;
@@ -24,6 +30,7 @@ const BoardDetailPage = () => {
     const navigate = useNavigate();
     const [voteStatus, setVoteStatus] = useState<'UP' | 'DOWN' | null>(null);
     const [voteCount, setVoteCount] = useState({ UP: 0, DOWN: 0 });
+    const [attachFiles, setAttachFiles] = useState<AttachFile[]>([]);
 
     const onCancel = () => navigate(-1);
 
@@ -134,23 +141,6 @@ const BoardDetailPage = () => {
                         </Col>
                     </Row>
                     <Row className="mt-4">
-                        {/* <Col className='mt-3 mb-2 justify-content-center text-center' xs="auto">
-                            <FaThumbsUp
-                                size={24}
-                                color={voteStatus === 'up' ? 'blue' : 'gray'}
-                                style={{ cursor: 'pointer', marginRight: '8px' }}
-                                onClick={() => handleVote('up')}
-                            />
-                            <span className="me-3">{voteCount.up}</span>
-
-                            <FaThumbsDown
-                                size={24}
-                                color={voteStatus === 'down' ? 'red' : 'gray'}
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => handleVote('down')}
-                            />
-                            <span>{voteCount.down}</span>
-                        </Col> */}
                         <Col className="d-flex justify-content-end">
                             <ButtonGroup>
                                 <Button variant="secondary" onClick={onCancel}>목록</Button>
